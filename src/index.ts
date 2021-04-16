@@ -1,4 +1,4 @@
-import { findCampaign, getCookie, log, setCookie, token } from "./local";
+import { findCampaign, log } from "./local";
 
 declare global {
   interface Window {
@@ -7,7 +7,6 @@ declare global {
 }
 
 interface SessionObject {
-  $sid: String;
   $campaign: String;
   $hostname: String;
   $href: String;
@@ -34,7 +33,6 @@ interface WindowObject {
 
 var VK: WindowObject = {
   sessionData: {
-    $sid: "",
     $campaign: "",
     $hostname: location.hostname,
     $href: location.href,
@@ -79,25 +77,25 @@ function observer() {
     scroll: false,
   };
 
-  // 5s
-  setTimeout(function () {
-    queue("Interaction", "5s");
-  }, 5000);
-
-  // 15s
-  setTimeout(function () {
-    queue("Interaction", "15s");
-  }, 15000);
-
-  // 30s
-  setTimeout(function () {
-    queue("Interaction", "30s");
-  }, 30000);
-
-  // 60s
-  setTimeout(function () {
-    queue("Interaction", "60s");
-  }, 60000);
+  // // 5s
+  // setTimeout(function () {
+  //   queue("Interaction", "5s");
+  // }, 5000);
+  //
+  // // 15s
+  // setTimeout(function () {
+  //   queue("Interaction", "15s");
+  // }, 15000);
+  //
+  // // 30s
+  // setTimeout(function () {
+  //   queue("Interaction", "30s");
+  // }, 30000);
+  //
+  // // 60s
+  // setTimeout(function () {
+  //   queue("Interaction", "60s");
+  // }, 60000);
 
   // Scroll
   window.addEventListener("scroll", function () {
@@ -106,14 +104,14 @@ function observer() {
     }
     state.scroll = true;
   });
-
-  // Click
-  window.addEventListener("click", function () {
-    if (!state.click) {
-      queue("Interaction", "Click");
-    }
-    state.click = true;
-  });
+  //
+  // // Click
+  // window.addEventListener("click", function () {
+  //   if (!state.click) {
+  //     queue("Interaction", "Click");
+  //   }
+  //   state.click = true;
+  // });
 
   // Page View
   queue("Pageview");
@@ -136,11 +134,11 @@ function queue(name: string, label = "None", fn = () => {}) {
     }
   };
 
-  xhttp.open("POST", "https://e.visitorkit.com/v1/queue", true);
+  xhttp.open("POST", "%%post_url%%", true);
   xhttp.setRequestHeader("Content-type", "application/json");
   xhttp.send(JSON.stringify(data));
 
-  log("--> " + data["$name"]);
+  log("--> " + data["$name"] + " : " + data["label"]);
   log(data);
 }
 
@@ -148,39 +146,9 @@ function queue(name: string, label = "None", fn = () => {}) {
  * Starting Place
  */
 function init() {
-  // New Session
-  if (getCookie("VK_") == "{}") {
-    var campaign = findCampaign();
-    var sid = token();
-    setCookie(
-      "VK_",
-      JSON.stringify({
-        $campaign: campaign,
-        $sid: sid,
-      }),
-      5
-    );
-
-    VK.sessionData.$campaign = campaign;
-    VK.sessionData.$sid = sid;
-
-    queue("Session");
-    observer();
-  } else {
-    // Resume Session
-    var data = JSON.parse(getCookie("VK_"));
-    VK.sessionData.$campaign = data.$campaign;
-    VK.sessionData.$sid = data.$sid;
-    setCookie(
-      "VK_",
-      JSON.stringify({
-        $campaign: VK.sessionData.$campaign,
-        $sid: VK.sessionData.$sid,
-      }),
-      5
-    );
-    observer();
-  }
+  var campaign = findCampaign();
+  VK.sessionData.$campaign = campaign;
+  observer();
 }
 
 init();

@@ -32,36 +32,6 @@ export function log(text: any) {
 }
 
 /**
- * Set Cookie
- */
-export function setCookie(name: string, value: string, minutes: number) {
-  var date = new Date();
-  var expires = "; expires=" + new Date(date.getTime() + minutes * 60000).toUTCString();
-  document.cookie = name + "=" + (value || "") + expires + "; samesite=strict; path=/";
-}
-
-/**
- * Get Cookie
- */
-export function getCookie(name: string) {
-  var matches = document.cookie.match(
-    new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
-  );
-  return matches ? decodeURIComponent(matches[1]) : "{}";
-}
-
-/**
- * Generate a Session Token
- */
-export function token() {
-  return "xxx:xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c == "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
-
-/**
  * Look for "ref" and "utm_campaign"
  */
 export function findCampaign() {

@@ -4,7 +4,7 @@ const webpack = require("webpack");
 const env = process.env.WEBPACK_ENV;
 
 // Simply configure those 4 variables:
-const OUTPUT_FILENAME = "sdk";
+const OUTPUT_FILENAME = "sdk.v1";
 const DEST_FOLDER = "dist";
 const COPYRIGHT = `2021 Kabin LLC`;
 
