@@ -58,11 +58,12 @@ var VK = {
       }
     };
 
-    xhttp.open(
-      "POST",
-      "https://sdk.visitorkit.com/v1/" + data["$install_key"],
-      true
-    );
+    var endpoint = "https://sdk.visitorkit.com/v1/" + data["$install_key"];
+    if (location.hostname == "vk.local") {
+      endpoint = "http://sdk.vk.local/v1/" + data["$install_key"];
+    }
+
+    xhttp.open("POST", endpoint, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(data));
 
@@ -77,30 +78,28 @@ var VK = {
   },
   pageview: function() {
     VK.queue("Pageview");
+    VK.observer();
   },
   manual: function(a, b) {
     VK.queue(a, b);
   },
   observer: function() {
-    var state = {
-      click: false,
-      scroll: false
-    };
-
-    // Scroll
-    window.addEventListener("scroll", function() {
-      if (!state.scroll) {
-        VK.queue("Interaction", "Scroll");
-      }
-      state.scroll = true;
-    });
-
-    // Pageview
-    VK.pageview();
+    setTimeout(function() {
+      VK.queue("TimeOnPage", "15");
+    }, 15000);
+    setTimeout(function() {
+      VK.queue("TimeOnPage", "30");
+    }, 30000);
+    setTimeout(function() {
+      VK.queue("TimeOnPage", "45");
+    }, 45000);
+    setTimeout(function() {
+      VK.queue("TimeOnPage", "60");
+    }, 60000);
   },
   init: function(key, auto = true) {
     VK.sessionData.$install_key = key;
-    if (auto) VK.observer();
+    if (auto) VK.pageview();
   }
 };
 
