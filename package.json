@@ -1,16 +1,16 @@
 {
-  "name": "visitorkit",
-  "version": "1.1.0",
-  "description": "The official visitorkit JavaScript browser client library",
-  "main": "src/index.js",
-  "author": "Terrillo Walls <terrillo@visitorkit.com> (https://visitorkit.com)",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Khabin/visitorkit-js.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Khabin/visitorkit-js/issues"
-  },
-  "homepage": "https://visitorkit.com/docs/"
+	"name": "visitorkit",
+	"version": "1.2.0",
+	"description": "The official Visitorkit JavaScript browser client library",
+	"main": "src/index.js",
+	"author": "Visitorkit <hello@visitorkit.com> (https://visitorkit.com)",
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Khabin/visitorkit-js.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Khabin/visitorkit-js/issues"
+	},
+	"homepage": "https://visitorkit.com/docs"
 }
