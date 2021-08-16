@@ -49,6 +49,15 @@ var VK = {
 		data["$name"] = name;
 		data["label"] = label;
 		data["$campaign"] = VK.findCampaign();
+		data["$height"] = window.innerHeight;
+		data["$width"] = window.innerWidth;
+
+		// Performance
+		data["$performance"] = 2000;
+		if (window.performance && name == "Pageview") {
+			var score = performance.timing.loadEventEnd - performance.timing.responseEnd;
+			if (score > 0) data["$performance"] = score;
+		}
 
 		// Send Request
 		var xhttp = new XMLHttpRequest();
@@ -71,13 +80,15 @@ var VK = {
 		VK.log(data);
 	},
 	pageview: function () {
-		VK.queue("Pageview");
 		VK.observer();
 	},
 	manual: function (a, b) {
 		VK.queue(a, b);
 	},
 	observer: function () {
+		setTimeout(function () {
+			VK.queue("Pageview");
+		}, 2000);
 		setTimeout(function () {
 			VK.queue("TimeOnPage", "15");
 		}, 15000);
